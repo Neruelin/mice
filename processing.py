@@ -14,10 +14,3 @@ while (success):
   print("Created: frame" + str(count) + ".jpg")
   success, image = vidcap.read()
   count += 1
-  
-
-
-
-
-  #BIG HOT 
-  #NOT 

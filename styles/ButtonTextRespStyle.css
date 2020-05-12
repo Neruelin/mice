@@ -1,0 +1,11 @@
+#Test{
+    background-color: blue;
+}
+
+.TheButon{
+    border-style: solid;
+    border-radius: 10px;
+    border-color: mix($color: #ffccee, $color: #aabb22, $weight: 0.5);
+    
+}
+
