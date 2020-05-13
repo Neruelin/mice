@@ -6,7 +6,7 @@ import pandas as pd
 import cv2
 
 videoDirectory = "./videos"
-videoName = "test6.avi"
+videoName = "test1.mp4"
 videoNameNoExt = ".".join(videoName.split('.')[:-1])
 
 frameDirectory = "./frames"
@@ -63,8 +63,7 @@ def getNextImage():
             _, encoded = cv2.imencode(".jpg", tempimage)
 
         hexstr = base64.b64encode(encoded)
-        print(str(hexstr))
-        data = {"image": str(hexstr)[2:-1], "frame": str(count), "videoName": videoNameNoExt}
+        data = {"Image": str(hexstr)[2:-1], "Frame": str(count), "VideoName": videoNameNoExt}
         resp = jsonify(data)
         resp.headers.add("content-type", "Application/JSON")
         resp.headers.add("Access-Control-Allow-Origin", "*")
@@ -81,13 +80,15 @@ def receiveLabel():
     global dataFrame
     # print(request.json['pos1'])
     json = request.json
-    dataFrame.append([ \
-        json['VideoName'],  \
-        json['Frame'], \
-        json['X'], \
-        json['Y'], \
-        json['Width'], \
-        json['Height'], \
-        json['Found']])
+    print(json['Frame'])
+    dataFrame = dataFrame.append({ \
+        'VideoName': json['VideoName'],  \
+        'FrameNumber': json['Frame'], \
+        'X': json['X'], \
+        'Y': json['Y'], \
+        'Width': json['Width'], \
+        'Height': json['Height'], \
+        'Found': json['Found'] \
+        }, ignore_index=True)
     dataFrame.to_csv(csvPath)
     return _corsify_actual_response(Response("oops"))
